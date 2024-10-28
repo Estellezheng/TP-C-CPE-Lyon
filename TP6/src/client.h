@@ -7,6 +7,8 @@
 
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
+#include "cJSON.h"
+#include "cJSON_Utils.h"
 
 /*
  * port d'ordinateur pour envoyer et recevoir des messages
@@ -17,6 +19,6 @@
  * Fonction d'envoi et de réception de messages
  * Il faut un argument : l'identifiant de la socket
  */
-int envoie_recois_message(int socketfd);
+int envoie_recois_message(int socketfd, cJSON *root);
 
 #endif
