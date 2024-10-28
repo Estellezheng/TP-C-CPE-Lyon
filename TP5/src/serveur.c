@@ -257,7 +257,7 @@ int main()
       close(client_socket_fd); // Fermer le socket du client dans le processus parent
     }
   }
-
+ 
   // Le programme ne devrait jamais atteindre cette ligne dans la boucle infinie
   return 0;
 }
