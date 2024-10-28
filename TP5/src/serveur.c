@@ -29,6 +29,14 @@ int socketfd; // Déclaration globale de socketfd
  */
 int renvoie_message(int client_socket_fd, char *data)
 {
+   // Réinitialisation de l'ensemble des données
+  memset(data, 0, sizeof(data));
+
+  // Demande à l'utilisateur d'entrer un message
+  char message[1024];
+  printf("Votre message (max 1000 caractères): ");
+  fgets(message, sizeof(message), stdin);
+  strncpy(data, message, sizeof(message));
   int data_size = write(client_socket_fd, (void *)data, strlen(data));
 
   if (data_size < 0)
@@ -39,6 +47,43 @@ int renvoie_message(int client_socket_fd, char *data)
 
   return EXIT_SUCCESS;
 }
+
+// cette fonction renvoie le résultat d'une opération après la demande calcle d'un client
+int recois_numeros_calcule (int client_socket_fd, char *data){
+  char operateur[2];
+  int num1, num2;
+  int resultat;
+
+  // Extraction de l'opérateur et des nombres et calcul
+    if (sscanf(data, "calcule : %s %d %d", operateur, &num1, &num2) == 3) {
+        if (strcmp(operateur, "+") == 0) {
+            resultat = num1 + num2;
+        } else if (strcmp(operateur, "/") == 0) {
+            if (num2 != 0) {
+                resultat = num1 / num2;
+            } else {
+                write(client_socket_fd, "Erreur: division par zéro", 25);
+                return -1;
+            }
+        } else {
+            write(client_socket_fd, "Erreur: opérateur inconnu", 26);
+            return -1;
+        }
+    } 
+    else {    // format incorect pour le traitement de l'operation
+        write(client_socket_fd, "Erreur: format incorrect", 23);
+        return -1;
+    }
+
+    // Envoie le résultat au client
+    char resultat_message[50];
+    sprintf(resultat_message, "%d", resultat);
+    snprintf(resultat_message, sizeof(resultat_message), "calcule : %d", resultat);
+    write(client_socket_fd, resultat_message, strlen(resultat_message));
+
+    return 0;
+}
+
 
 /**
  * Cette fonction lit les données envoyées par le client,
@@ -51,12 +96,19 @@ int recois_envoie_message(int client_socket_fd, char *data)
 {
   printf("Message reçu: %s\n", data);
   char code[10];
-  if (sscanf(data, "%9s:", code) == 1) // Assurez-vous que le format est correct
-  {
-    if (strcmp(code, "message:") == 0)
-    {
-      return renvoie_message(client_socket_fd, data);
+
+  // 2 cas 
+  if (sscanf(data, "%9s:", code) == 1){ //  chaîne de 9 caractères stockée dans code à partir de data 
+    if (strcmp(code, "calcule") == 0){  // si le message commence par calcule => il effectue et renvoie l'operation
+      recois_numeros_calcule(client_socket_fd, data);
     }
+    else{             // sinon renvoie le message par défaut
+      renvoie_message(client_socket_fd, data);
+    }
+  }
+  else {
+      // Si le format n'est pas reconnu, renvoie un message d'erreur        
+      write(client_socket_fd, "Erreur: format du message non reconnu", 36);
   }
 
   return (EXIT_SUCCESS);
@@ -78,6 +130,7 @@ void gestionnaire_ctrl_c(int signal)
 
   exit(0); // Quitter proprement le programme.
 }
+
 
 /**
  * Gère la communication avec un client spécifique.
@@ -121,16 +174,17 @@ void gerer_client(int client_socket_fd)
 /**
  * Configuration du serveur socket et attente de connexions.
  */
+// gerer_client > recois_envoie_message > renvoie_message ou recois_numeros_calcule
 
 int main()
 {
-
   int bind_status;                // Statut de la liaison
   struct sockaddr_in server_addr; // Structure pour l'adresse du serveur
   int option = 1;                 // Option pour setsockopt
 
   // Création d'une socket
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
+
 
   // Vérification si la création de la socket a réussi
   if (socketfd < 0)

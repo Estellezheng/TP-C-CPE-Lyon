@@ -16,11 +16,13 @@
 #include <unistd.h>
 
 #include "serveur.h"
+#include "cJSON.h"
+#include "cJSON_Utils.h"
 int socketfd;
 
 int visualize_plot()
 {
-  const char *browser = "firefox";
+  const char *browser = "cat";
 
   char command[256];
   snprintf(command, sizeof(command), "%s %s", browser, svg_file_path);
@@ -44,15 +46,20 @@ double degreesToRadians(double degrees)
   return degrees * M_PI / 180.0;
 }
 
-int plot(char *data)
+int plot(char *data)    // genere un fichier 400x400
 {
   int i;
   char *saveptr = NULL;
   char *str = data;
   char *token = strtok_r(str, ",", &saveptr);
-  const int num_colors = 10;
+  //const int num_colors = 10;
+  char nmb_couleursC[3];
+  nmb_couleursC[0] = data[10];
+  nmb_couleursC[1] = data[11];
+  nmb_couleursC[2] = '\0';
+  int nmb_couleurs = atoi(nmb_couleursC);
 
-  double angles[num_colors];
+  double angles[nmb_couleurs];
   memset(angles, 0, sizeof(angles));
 
   FILE *svg_file = fopen(svg_file_path, "w");
@@ -82,7 +89,7 @@ int plot(char *data)
       break;
     }
     str = NULL;
-    angles[i] = 360.0 / num_colors;
+    angles[i] = 360.0 / nmb_couleurs;
 
     double end_angle = start_angle + angles[i];
 

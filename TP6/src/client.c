@@ -15,6 +15,8 @@
 
 #include "client.h"
 #include "bmp.h"
+#include "cJSON.h"
+#include "cJSON_Utils.h"
 
 /*
  * Fonction d'envoi et de réception de messages
@@ -58,22 +60,23 @@ int envoie_recois_message(int socketfd)
   return 0;
 }
 
-void analyse(char *pathname, char *data)
+void analyse(char *pathname, char *data, int nmb_couleurs)
 {
   // compte de couleurs
   couleur_compteur *cc = analyse_bmp_image(pathname);
 
   int count;
   strcpy(data, "couleurs: ");
-  char temp_string[10] = "10,";
-  if (cc->size < 10)
+  char temp_string[nmb_couleurs];
+  sprintf(temp_string, "%d,", nmb_couleurs);
+  if (cc->size < nmb_couleurs)
   {
     sprintf(temp_string, "%d,", cc->size);
   }
   strcat(data, temp_string);
 
-  // choisir 10 couleurs
-  for (count = 1; count < 11 && cc->size - count > 0; count++)
+  // choisir x couleurs
+  for (count = 1; count < nmb_couleurs+1 && cc->size - count > 0; count++)
   {
     if (cc->compte_bit == BITS32)
     {
@@ -90,11 +93,11 @@ void analyse(char *pathname, char *data)
   data[strlen(data) - 1] = '\0';
 }
 
-int envoie_couleurs(int socketfd, char *pathname)
+int envoie_couleurs(int socketfd, char *pathname, int nmb_couleurs) 
 {
   char data[1024];
   memset(data, 0, sizeof(data));
-  analyse(pathname, data);
+  analyse(pathname, data, nmb_couleurs);    // on ajoute l'argument du changement de nombre de couleurs
 
   int write_status = write(socketfd, data, strlen(data));
   if (write_status < 0)
@@ -112,9 +115,9 @@ int main(int argc, char **argv)
 
   struct sockaddr_in server_addr;
 
-  if (argc < 2)
+  if (argc < 3)
   {
-    printf("usage: ./client chemin_bmp_image\n");
+    printf("usage: ./client chemin_bmp_image nombre_de_couleurs\n");
     return (EXIT_FAILURE);
   }
 
@@ -141,7 +144,7 @@ int main(int argc, char **argv)
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
-  if (argc != 2)
+  if (argc != 3)
   {
     // envoyer et recevoir un message
     envoie_recois_message(socketfd);
@@ -150,7 +153,14 @@ int main(int argc, char **argv)
   {
     // envoyer et recevoir les couleurs prédominantes
     // d'une image au format BMP (argv[1])
-    envoie_couleurs(socketfd, argv[1]);
+    // nombre de couleurs 
+    int nmb_couleurs = atoi(argv[2]); 
+    if(nmb_couleurs<10 || nmb_couleurs>30){ 
+      printf("Entrez un nombre de couleurs entre 10 et 30\n");
+      return (EXIT_FAILURE);
+    }
+    else
+      envoie_couleurs(socketfd, argv[1], nmb_couleurs);
   }
 
   close(socketfd);

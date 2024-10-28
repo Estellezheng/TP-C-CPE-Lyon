@@ -1,2 +1,2 @@
-1. 
-2. 
+1. Juilette TARDY
+2. Estelle ZHENG
