@@ -1,3 +1,12 @@
+// TP4 Exercice 4
+// Calculatrice en ligne de commande
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : calcule.c
+ * Description   :
+ * Ce programme est une calculatrice en ligne de commande qui permet à l'utilisateur de réaliser des opérations 
+ * En reutilisant le fichier operator.c
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include "operator.h"
@@ -9,6 +18,7 @@ int main(int argc, char* argv[]){
     }
 
     // Extraire les opérateurs et les nombres
+    // format : ./calcule + 10 
     char operator = argv[1][0]; 
     int num1 = atoi(argv[2]);
     int num2 = atoi(argv[3]);

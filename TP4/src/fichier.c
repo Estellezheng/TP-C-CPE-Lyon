@@ -1,7 +1,20 @@
+// TP4 Exercice 2
+// Gestion de fichiers
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : fichier.c
+ * Description   :
+ * Ce programme a pour but de gérer des fichiers en utilisant deux fonctions définies dans les fichiers fichier.c et fichier.h. 
+ * Les fonctions requièrent le nom d'un fichier en entrée
+ * La fonction lire_fichier affiche le contenu du fichier à l'écran
+ * La fonction ecrire_dans_fichier permet à l'utilisateur de saisir un message qui sera ensuite enregistré dans le fichier.
+ * 
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
 #include "fichier.h"
 
-// TP4 - Exercice 2
-// Gestion de fichiers
 
 int lire_fichier(const char* nom_de_fichier){
     FILE* fichier = fopen(nom_de_fichier, "r");  // Ouvre le fichier en mode lecture

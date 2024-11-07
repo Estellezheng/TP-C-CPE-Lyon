@@ -1,9 +1,17 @@
-#include <stdio.h>
+// TP4 Exercice 6
+// Recherche de phrases dans un fichier
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : chercherfichier.c
+ * Description   :
+ * Le programme permet à l'utilisateur de rechercher une phrase dans un fichier donné. 
+ * Le programme affiche les lignes du fichier où la phrase est présente, 
+ * ainsi que le nombre de fois qu'elle apparaît dans chaque ligne
+ */
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
-// TP4 - Exercice 6
-// Recherche de phrases dans un fichier
 
 int main(){
 
@@ -51,6 +59,14 @@ int main(){
 
         fclose(fichier);  // fermeture du fichier
         }
-        
+
+    // Exemple
+    /*
+    Saisissez le nom du fichier : chercherPhrase
+    Saisissez la phrase à chercher : Exercice 6
+    Resultat de la recherche :
+    Ligne 1, 1 fois
+    Ligne 10, 2 fois      
+    */  
 
 }

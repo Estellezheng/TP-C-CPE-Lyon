@@ -1,9 +1,20 @@
+// TP4 Exercice 3
+// Gestion d'une base de données étudiante
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : etudiant_bd.c
+ * Description   :
+ * Ce programme permet de gérer une base de données d'étudiants 
+ * en enregistrant leurs noms, prénoms, adresses et notes dans un fichier texte etudiant.txt. 
+ * L'utilisateur est invité à fournir les détails de chaque étudiant via scanf, 
+ * et ces informations sont ensuite stockées dans le fichier etudiant.txt.
+ * 
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "fichier.h"
 
-// TP4 - Exercice 3
-// Gestion d'une base de données étudiante
 
 struct Etudiant {
     char nom[10];
@@ -18,7 +29,8 @@ int main(){
     struct Etudiant tabEtudiant[2];
 
     // saisie des infos par l'utilisateur
-    for (int i=0; i<2; i++){
+    int nbEtudiants = 2;
+    for (int i=0; i<nbEtudiants; i++){
         printf("\nEntrez les détails de l'étudiant.e %d:\nNom : ", i+1);
         scanf("%s",tabEtudiant[i].nom);
         getchar();
@@ -36,11 +48,11 @@ int main(){
         getchar();
     }
 
-    // Ecriture dans le fichier etudiant
+    // Ecriture dans le fichier etudiant.txt
     char nom_de_fichier[10] = "etudiants";
     char message[1000];
 
-    for (int j=0; j<2; j++){
+    for (int j=0; j<nbEtudiants; j++){
         sprintf(message, "Nom: %s, Prenom: %s, Adresse: %s, Note1: %d, Note2: %d\n",
         tabEtudiant[j].nom, tabEtudiant[j].prenom, tabEtudiant[j].adresse,
         tabEtudiant[j].note1, tabEtudiant[j].note2);    // formate la chaine dans le tablau char

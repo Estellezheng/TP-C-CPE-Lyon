@@ -1,11 +1,19 @@
-// TP 5 - Exercice 1
-// Liste de fichiers et repertoires dans un dossier
+// TP5 Exercice 1 et Exercice 2
+// 1. Liste de fichiers et repertoires dans un dossier
+// 2. Liste récursive de fichiers et répertoires dans un dossier
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : repertoire.c
+ * Description   :
+ * Version 1 : Le programme prend en entrée le nom d'un répertoire via l'interface en ligne de commande 
+ * et affiche la liste des fichiers (et répertoires, le cas échéant) présents dans ce répertoire. 
+ * Version 2 : Il utilise une fonction récursive pour parcourir tous les niveaux du répertoire.
+ */
 
 #include "repertoire.h"
 #include <stdio.h>
 #include <dirent.h> 
 #include <string.h>
-
 
 
 // Fonction pour lire le contenu d'un répertoire
@@ -38,7 +46,7 @@ void lire_dossier_recursif(const char *nom_repertoire){
         if (strcmp(entree->d_name, ".") == 0 || strcmp(entree->d_name, "..") == 0) {
             continue;
         }
-        // Afficher le nom du fichier ou répertoire
+        // Affiche le nom du fichier ou répertoire
         printf("%s/%s\n", nom_repertoire, entree->d_name);
         // Vérifier si c'est un répertoire pour faire la récursion
         if (entree->d_type == DT_DIR) {

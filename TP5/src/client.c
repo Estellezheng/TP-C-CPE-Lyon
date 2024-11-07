@@ -1,3 +1,24 @@
+// TP5 Exercice 4, 5 et 6
+// 1. Liste de fichiers et repertoires dans un dossier
+// 2. Liste récursive de fichiers et répertoires dans un dossier
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : serveur.c
+ * Description   :
+ * - utilisation de make
+ * 4. Simuler un environnement client-serveur en utilisant deux terminaux sur la même machine.
+ * Le serveur répond aux requêtes du client.
+ * 5. Format de message ou format calcule : prend en charge les calculs simples (+, /)
+ *    - client envoie : calcule : + 23 45
+ *    - serveur repond : calcule : 68
+ * 6. Le client lit les notes des étudiants à partir de fichiers dans le dossier etudiant
+ * et envoit des messages au serveur pour effectuer des calculs tels que la somme des notes d'un étudiant et la moyenne de la classe.
+ * Les differents cas envoyer par le client 
+ *  - message
+ *  - somme : 23 45   (calcul classique)
+ *  - calcule moyenne   (calcule la moyenne de toute le classe)
+ */
+
 /*
  * SPDX-FileCopyrightText: 2021 John Samuel
  *
@@ -93,7 +114,7 @@ int envoie_recois_message(int socketfd){
       for (int etudiant = 0; etudiant < NB_ETUDIANTS; etudiant++){
         for (int note = 0; note < NB_NOTES; note++){
           envoie_operateur_numeros(socketfd, data, "+", somme, notes[etudiant][note]);    // envoie de la demande de somme au serveur
-          // lecture et affichage du resulatat envoyé par le serveur
+          // lecture et affichage du resultat envoyé par le serveur
           memset(data, 0, sizeof(data));
           int read_status = read(socketfd, data, sizeof(data));
           if ( read_status < 0 ) {

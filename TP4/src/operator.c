@@ -1,10 +1,21 @@
+// TP4 - Exercice 1 
+// Calcul avec opérateurs
+/*
+ * Fichier       : operator.c
+ * Description   :
+ * en utilisant des fichiers d'en-tête et de code source distincts. 
+ * Les opérations  (somme, différence, produit, quotient, modulo, 'et', ou, négation) seront effectuées sur deux variables : num1 et num2. 
+ * La sélection de l'opérateur se fera à l'aide d'une variable op contenant l'un des différents opérateurs (+, -, *, /, %, &, |, ~). 
+ * Le programme principal testera ces fonctions avec différentes valeurs de num1, num2 et op.
+
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "operator.h"
 
-// TP4 - Exercice 1 
-// Calcul avec opérateurs
-
+// Definition des fonctions
 
 int somme (int num1, int num2){
     return num1 + num2;

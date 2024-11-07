@@ -1,9 +1,7 @@
 // TP 4 - Exercice 7
 // Gestion d'une liste de couleurs
-
 #ifndef LISTE_H
 #define LISTE_H
-
 
 // Structure pour la liste de couleurs
 struct couleur {

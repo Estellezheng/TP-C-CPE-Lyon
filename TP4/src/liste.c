@@ -1,5 +1,12 @@
-// TP 4 - Exercice 7
+// TP4  Exercice 7
 // Gestion d'une liste de couleurs
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : liste.c
+ * Description   :
+ * Le programme permet de gérer une liste (simplement chaînée) de couleurs RGB. 
+ * deux fonctions principales : insertion pour ajouter une couleur à la liste et parcours pour afficher toutes les couleurs de la liste.
+ */
 
 #include "liste.h"
 #include <stdio.h>
@@ -35,6 +42,7 @@ void insertion(struct couleur* couleur_nouvelle, struct liste_couleurs* ma_liste
     }
 }
 
+// Parcour et affiche la liste depuis la tete
 void parcours(struct liste_couleurs* ma_liste){
     struct couleur* couleur_actuelle = ma_liste->tete;
     while (couleur_actuelle != NULL) {

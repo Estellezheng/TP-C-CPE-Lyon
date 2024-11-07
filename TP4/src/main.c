@@ -1,3 +1,15 @@
+// TP4 
+// Calcul avec opérateurs
+/*
+ * Auteur(s)     : Juliette Tardy et Estelle Zheng
+ * Fichier       : main.c
+ * Description   :
+ * Le programme principal teste 3 exercicies avec un switch :
+ * - 1 : exercice 1 : calcul avec differenets operation : saisie valeurs de num1, num2 et op.
+ * - 2 : exercice 2 : gestion de fichier : choix pour lire ou ecrire dans un fichier
+ * - 7 : exercice 7 : initation et insertion de couleurs RGV dans une liste chainée et affichage
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +21,7 @@
 int main(int argc, char *argv[]){
     
     // Exercice 1 : Calcul avec operateur
+    // ./main 1
     if (argc > 1 && strcmp(argv[1], "1") == 0){
         int num1, num2, resulat;
         char op;
@@ -50,12 +63,13 @@ int main(int argc, char *argv[]){
     }
 
     // EXO 2 : gestion des fichiers
-
+    // ./main 2
     if (argc > 1 && strcmp(argv[1], "2") == 0){
         int choix;
         char nom_de_fichier [10];   // fichier existant texte
         char message[100];
 
+        // Saisie choix mode de gestion de fichier
         printf("Que souhaitez-vous faire ?\n1. Lire un fichier\n2. Écrire dans un fichier\nVotre choix : ");
         scanf("%d",&choix);
         getchar();
@@ -90,7 +104,7 @@ int main(int argc, char *argv[]){
     }
 
     // EXO 3 : Liste simplement chainé de couleurs
-
+    // ./main 7
     if (argc > 1 && strcmp(argv[1], "7") == 0){
         struct liste_couleurs ma_liste;
         init_liste(&ma_liste);
