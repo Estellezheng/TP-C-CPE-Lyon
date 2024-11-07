@@ -8,7 +8,7 @@
 *
 
 # Difficulté
-* Découverte de l'utilisation des fichiers ou mode lecture et ecriture
+* Découverte de l'utilisation des fichiers en mode lecture ou ecriture
 
 # Commentaires
 * 
